@@ -12,14 +12,26 @@
     </head>
 
     <div class="container" style="width: 370px !important;">
+        <form>
+            <div class="form-group row">
+                <button type="button" id="submitGetBtn" class="btn btn-primary">Send GET Request</button>
+            </div>
+            <div class="form-group row">
+                <button type="button" id="submitPutBtn" class="btn btn-primary">Send PUT Request</button>
+            </div>
+            <div class="form-group row">
+                <button type="button" id="submitPostBtn" class="btn btn-primary">Send POST Request</button>
+            </div>
+            <div class="form-group row">
+                <button type="button" id="submitDeleteBtn" class="btn btn-primary">Send DELETE Request</button>
+            </div>
+            <div class="form-group row">
+                <button type="button" id="submitPatchBtn" class="btn btn-primary">Send PATCH Request</button>
+            </div>
+        </form>
         <div id="msg">
 
         </div>
-        <form>
-            <div class="form-group">
-                <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -28,7 +40,7 @@
     <script>
         $(document).ready(function () {
             // click on button submit
-            $("#submitBtn").on('click', function () {
+            $("#submitGetBtn").on('click', function () {
                 $.ajax({
                     headers: {
                         'Content-Type': 'application/json'
@@ -36,6 +48,118 @@
                     crossDomain: true,
                     dataType: "json",
                     type: "GET",
+                    url: "http://localhost:8080/webresources/sample"
+                }).done(function (data, textStatus, jqXHR) {
+                    if (jqXHR.status === 200) {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-success");
+                        $("#msg").html("received the following message: " + data.msg);
+                    } else {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-danger");
+                        $("#msg").html("There was an error invoking the web service.");
+                    }
+                }).fail(function (data, textStatus, jqXHR) {
+                    console.log("ajax call failed");
+                    console.log("data = " + JSON.stringify(data));
+                    console.log("textStatus = " + textStatus);
+                    console.log("jqXHR = " + jqXHR);
+                    console.log("jqXHR.status = " + jqXHR.status);
+                });
+            });
+
+            $("#submitPutBtn").on('click', function () {
+                $.ajax({
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    crossDomain: true,
+                    dataType: "json",
+                    type: "PUT",
+                    url: "http://localhost:8080/webresources/sample"
+                }).done(function (data, textStatus, jqXHR) {
+                    if (jqXHR.status === 200) {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-success");
+                        $("#msg").html("received the following message: " + data.msg);
+                    } else {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-danger");
+                        $("#msg").html("There was an error invoking the web service.");
+                    }
+                }).fail(function (data, textStatus, jqXHR) {
+                    console.log("ajax call failed");
+                    console.log("data = " + JSON.stringify(data));
+                    console.log("textStatus = " + textStatus);
+                    console.log("jqXHR = " + jqXHR);
+                    console.log("jqXHR.status = " + jqXHR.status);
+                });
+            });
+
+            $("#submitPostBtn").on('click', function () {
+                $.ajax({
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    crossDomain: true,
+                    dataType: "json",
+                    type: "POST",
+                    url: "http://localhost:8080/webresources/sample"
+                }).done(function (data, textStatus, jqXHR) {
+                    if (jqXHR.status === 200) {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-success");
+                        $("#msg").html("received the following message: " + data.msg);
+                    } else {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-danger");
+                        $("#msg").html("There was an error invoking the web service.");
+                    }
+                }).fail(function (data, textStatus, jqXHR) {
+                    console.log("ajax call failed");
+                    console.log("data = " + JSON.stringify(data));
+                    console.log("textStatus = " + textStatus);
+                    console.log("jqXHR = " + jqXHR);
+                    console.log("jqXHR.status = " + jqXHR.status);
+                });
+            });
+
+            $("#submitDeleteBtn").on('click', function () {
+                $.ajax({
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    crossDomain: true,
+                    dataType: "json",
+                    type: "DELETE",
+                    url: "http://localhost:8080/webresources/sample"
+                }).done(function (data, textStatus, jqXHR) {
+                    if (jqXHR.status === 200) {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-success");
+                        $("#msg").html("received the following message: " + data.msg);
+                    } else {
+                        $("#msg").removeClass();
+                        $("#msg").toggleClass("alert alert-danger");
+                        $("#msg").html("There was an error invoking the web service.");
+                    }
+                }).fail(function (data, textStatus, jqXHR) {
+                    console.log("ajax call failed");
+                    console.log("data = " + JSON.stringify(data));
+                    console.log("textStatus = " + textStatus);
+                    console.log("jqXHR = " + jqXHR);
+                    console.log("jqXHR.status = " + jqXHR.status);
+                });
+            });
+
+            $("#submitPatchBtn").on('click', function () {
+                $.ajax({
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    crossDomain: true,
+                    dataType: "json",
+                    type: "PATCH",
                     url: "http://localhost:8080/webresources/sample"
                 }).done(function (data, textStatus, jqXHR) {
                     if (jqXHR.status === 200) {
