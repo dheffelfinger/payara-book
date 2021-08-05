@@ -35,27 +35,6 @@
             <artifactId>jakarta.jakartaee-web-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>jakarta.enterprise.concurrent</groupId>
-            <artifactId>jakarta.enterprise.concurrent-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.resource</groupId>
-            <artifactId>jakarta.resource-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.batch</groupId>
-            <artifactId>jakarta.batch-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile</groupId>
-            <artifactId>microprofile</artifactId>
-            <scope>provided</scope>
-            <type>pom</type>
-        </dependency>
     </dependencies>
 
     <build>
