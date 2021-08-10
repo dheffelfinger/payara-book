@@ -11,15 +11,6 @@ public class QueryParamsSampleService {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public String sayHello(@QueryParam("name") String name) {
-    return String.format("{\n"
-            + "  \"msg\":\"Hello, %s\"\n"
-            + "}", name);
-  }
-
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  @Path("formal")
   public String sayFormalHello(@QueryParam("title") String title, @QueryParam("lastName") String lastName) {
     return String.format("{\n"
             + "  \"msg\":\"Hello, %s %s\"\n"
