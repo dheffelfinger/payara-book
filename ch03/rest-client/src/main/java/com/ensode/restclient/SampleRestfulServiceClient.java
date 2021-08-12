@@ -1,5 +1,6 @@
 package com.ensode.restclient;
 
+import com.ensode.pojo.DummyPojo;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
@@ -24,7 +25,7 @@ public interface SampleRestfulServiceClient {
 
   @PATCH
   @Produces(value = MediaType.APPLICATION_JSON)
-  String processPatchRequest();
+  String processPatchRequest(DummyPojo dummyPojo);
 
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
@@ -32,6 +33,6 @@ public interface SampleRestfulServiceClient {
 
   @PUT
   @Produces(value = MediaType.APPLICATION_JSON)
-  String processPutRequest();
+  String processPutRequest(DummyPojo dummyPojo);
 
 }
