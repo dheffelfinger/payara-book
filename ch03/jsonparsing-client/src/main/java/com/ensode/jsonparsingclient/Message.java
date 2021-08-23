@@ -1,7 +1,5 @@
 package com.ensode.jsonparsingclient;
 
-
-
 public class Message {
 
   private String msgText;
