@@ -37,14 +37,10 @@ public class RestfulClient {
     LOGGER.log(Level.INFO, "--- Sending HTTP DELETE request ");
     returnedDeleteData = sampleRestfulServiceClient.processDeleteRequest();
 
-//    LOGGER.log(Level.INFO, "--- Sending HTTP PATCH request ");
-//    returnedPatchData = sampleRestfulServiceClient.processPatchRequest(new DummyPojo());
-
     LOGGER.log(Level.INFO, String.format("--- GET request response: %s", returnedGetData));
     LOGGER.log(Level.INFO, String.format("--- PUT request response: %s", returnedPutData));
     LOGGER.log(Level.INFO, String.format("--- POST request response: %s", returnedPostData));
     LOGGER.log(Level.INFO, String.format("--- DELETE request response: %s", returnedDeleteData));
-//    LOGGER.log(Level.INFO, String.format("--- PATCH request response: %s", returnedPatchData));
 
   }
 }

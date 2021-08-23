@@ -23,10 +23,6 @@ public interface SampleRestfulServiceClient {
   @Produces(value = MediaType.APPLICATION_JSON)
   String processGetRequest();
 
-  @PATCH
-  @Produces(value = MediaType.APPLICATION_JSON)
-  String processPatchRequest(DummyPojo dummyPojo);
-
   @POST
   @Produces(value = MediaType.APPLICATION_JSON)
   String processPostRequest();
