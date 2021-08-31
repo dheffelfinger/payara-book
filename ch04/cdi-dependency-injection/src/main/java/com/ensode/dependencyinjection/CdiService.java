@@ -18,7 +18,7 @@ public class CdiService {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public Country handlePostRequest(@QueryParam("countryAbbrev") String countryAbbrev) {
+  public Country handleGetRequest(@QueryParam("countryAbbrev") String countryAbbrev) {
     return countryLookup.getCountry(countryAbbrev);
   }
 
