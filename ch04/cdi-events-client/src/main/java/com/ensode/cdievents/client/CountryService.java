@@ -11,8 +11,8 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterRestClient
-@Path("cdiservice")
-public interface CdiService {
+@Path("countryservice")
+public interface CountryService {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

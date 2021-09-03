@@ -14,8 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("cdiservice")
-public class CdiService {
+@Path("countryservice")
+public class CountryService {
 
   @Inject
   private @Updated
@@ -27,8 +27,6 @@ public class CdiService {
 
   @Inject
   private CountryLookup countryLookup;
-
-  private static final Logger LOGGER = Logger.getLogger(CdiService.class.getName());
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)

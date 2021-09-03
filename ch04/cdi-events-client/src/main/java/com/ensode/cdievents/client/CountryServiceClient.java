@@ -7,11 +7,11 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @ApplicationScoped
-public class CdiServiceClient {
+public class CountryServiceClient {
   
   @Inject
   @RestClient
-  private CdiService cdiService;
+  private CountryService cdiService;
   
   public void updateCountries(@Observes @Initialized(ApplicationScoped.class) Object object){
     Country testCountry = new Country("TS", "Test");
