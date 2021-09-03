@@ -2,7 +2,6 @@ package com.ensode.cdievents;
 
 import com.ensode.cdievents.qualifier.Deleted;
 import com.ensode.cdievents.qualifier.Updated;
-import java.util.logging.Logger;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
