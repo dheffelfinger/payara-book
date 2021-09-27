@@ -15,8 +15,6 @@ public class CustomConfigSourceService {
 
   private static final Logger LOGGER = Logger.getLogger(CustomConfigSourceService.class.getName());
 
-//  @Inject
-//  private Config config;
   @Inject
   @ConfigProperty(name = "sample.property1")
   private String prop1;
@@ -25,15 +23,6 @@ public class CustomConfigSourceService {
   @Produces(MediaType.TEXT_PLAIN)
   public String getText() {
 
-    //begin temp code
-//    StringBuilder configSourceInfoBuilder = new StringBuilder();
-//    config.getConfigSources().forEach(cs -> {
-//     configSourceInfoBuilder.append(String.format("--- %s ---\n", cs.getName()));
-//     configSourceInfoBuilder.append(cs.getProperties().toString());
-//     configSourceInfoBuilder.append("\n");
-//    });
-    //end temp code
-//    LOGGER.log(Level.INFO, configSourceInfoBuilder.toString());
     return String.format("\nProperty value is: %s\n", prop1);
   }
 
