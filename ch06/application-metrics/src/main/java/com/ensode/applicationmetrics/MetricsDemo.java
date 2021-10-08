@@ -1,5 +1,6 @@
 package com.ensode.applicationmetrics;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
@@ -33,6 +34,7 @@ public class MetricsDemo {
   public String countedExample() {
     return "Counter was just increased\n";
   }
+  
 
   @GET
   @Gauge(unit = "some unit")
@@ -47,12 +49,8 @@ public class MetricsDemo {
   @ConcurrentGauge
   @Path("concurrentGauge")
   @Produces(MediaType.TEXT_PLAIN)
-  public void concurrentGaugeExample() {
-    try {
-      Thread.sleep(10_000);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(MetricsDemo.class.getName()).log(Level.SEVERE, null, ex);
-    }
+  public void concurrentGaugeExample() throws InterruptedException {
+    TimeUnit.SECONDS.sleep(10);
   }
 
   @GET
@@ -67,24 +65,16 @@ public class MetricsDemo {
   @Timed
   @Path("timed")
   @Produces(MediaType.TEXT_PLAIN)
-  public void timedExample() {
-    try {
-      Thread.sleep(2_000);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(MetricsDemo.class.getName()).log(Level.SEVERE, null, ex);
-    }
+  public void timedExample() throws InterruptedException {
+   TimeUnit.SECONDS.sleep(2);
   }
   
   @GET
   @SimplyTimed
   @Path("simplytimed")
   @Produces(MediaType.TEXT_PLAIN)
-  public void simplyTimedExample() {
-    try {
-      Thread.sleep(2_000);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(MetricsDemo.class.getName()).log(Level.SEVERE, null, ex);
-    }
+  public void simplyTimedExample() throws InterruptedException {
+    TimeUnit.SECONDS.sleep(3);
   }
 
 }
