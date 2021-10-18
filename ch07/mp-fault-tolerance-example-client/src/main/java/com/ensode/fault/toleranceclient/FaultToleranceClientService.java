@@ -1,11 +1,17 @@
 package com.ensode.fault.toleranceclient;
 
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -44,6 +50,26 @@ public class FaultToleranceClientService {
     retVal = String.format("The answer is %d\n", answer);
 
     return retVal;
+  }
+
+  @POST
+  @Path("semaphorebulkhead")
+  public void semaphoreBulkheadClient() throws InterruptedException {
+    List<Callable> callableList;
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+    Callable<String> semaphoreBulkheadCallable = () -> client.semaphoreBulkHeadDemo();
+
+    List<Future<String>> callResults = executorService.invokeAll(
+            List.of(semaphoreBulkheadCallable, semaphoreBulkheadCallable, semaphoreBulkheadCallable));
+
+    callResults.forEach(fut -> {
+      try {
+        System.out.println(fut.get());
+      } catch (InterruptedException | ExecutionException ex) {
+        LOGGER.log(Level.SEVERE, String.format("%s caught", ex.getClass().getName()), ex);
+      }
+    });
   }
 
 }
