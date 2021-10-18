@@ -61,11 +61,11 @@ public class FaultToleranceClientService {
     Callable<String> semaphoreBulkheadCallable = () -> client.semaphoreBulkHeadDemo();
 
     List<Future<String>> callResults = executorService.invokeAll(
-            List.of(semaphoreBulkheadCallable, semaphoreBulkheadCallable, semaphoreBulkheadCallable));
+            List.of(semaphoreBulkheadCallable, semaphoreBulkheadCallable, semaphoreBulkheadCallable, semaphoreBulkheadCallable));
 
     callResults.forEach(fut -> {
       try {
-        System.out.println(fut.get());
+        LOGGER.log(Level.INFO, fut.get());
       } catch (InterruptedException | ExecutionException ex) {
         LOGGER.log(Level.SEVERE, String.format("%s caught", ex.getClass().getName()), ex);
       }
