@@ -21,7 +21,16 @@ public class FaulToleranceExampleResource {
   @Produces(MediaType.TEXT_PLAIN)
   public CompletionStage<Integer> getAsynchronousValue() throws InterruptedException {
     TimeUnit.SECONDS.sleep(5);
-    return CompletableFuture.completedStage(42);
+    return CompletableFuture.completedStage(18);
+  }
+  
+  @Asynchronous
+  @GET
+  @Path("async2")
+  @Produces(MediaType.TEXT_PLAIN)
+  public CompletionStage<Integer> getAnotherAsynchronousValue() throws InterruptedException {
+    TimeUnit.SECONDS.sleep(7);
+    return CompletableFuture.completedStage(24);
   }
 
 }
