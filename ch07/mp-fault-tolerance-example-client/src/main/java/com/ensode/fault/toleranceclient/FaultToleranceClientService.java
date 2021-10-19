@@ -55,7 +55,6 @@ public class FaultToleranceClientService {
   @POST
   @Path("semaphorebulkhead")
   public void semaphoreBulkheadClient() throws InterruptedException {
-    List<Callable> callableList;
     ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     Callable<String> semaphoreBulkheadCallable = () -> client.semaphoreBulkHeadDemo();
@@ -66,6 +65,28 @@ public class FaultToleranceClientService {
     callResults.forEach(fut -> {
       try {
         LOGGER.log(Level.INFO, fut.get());
+      } catch (InterruptedException | ExecutionException ex) {
+        LOGGER.log(Level.SEVERE, String.format("%s caught", ex.getClass().getName()), ex);
+      }
+    });
+  }
+
+  @POST
+  @Path("threadpoolbulkhead")
+  public void threadpoolBulkheadClient() throws InterruptedException {
+    ExecutorService executorService = Executors.newFixedThreadPool(6);
+
+    List<Future<CompletionStage<String>>> callResults = executorService.invokeAll(
+            List.of(() -> client.threadPoolBulkheadExample(1),
+                    () -> client.threadPoolBulkheadExample(2),
+                    () -> client.threadPoolBulkheadExample(3),
+                    () -> client.threadPoolBulkheadExample(4),
+                    () -> client.threadPoolBulkheadExample(5),
+                    () -> client.threadPoolBulkheadExample(6)));
+
+    callResults.forEach(fut -> {
+      try {
+        LOGGER.log(Level.INFO, fut.get().toCompletableFuture().get());
       } catch (InterruptedException | ExecutionException ex) {
         LOGGER.log(Level.SEVERE, String.format("%s caught", ex.getClass().getName()), ex);
       }

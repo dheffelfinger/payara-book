@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
@@ -31,4 +32,10 @@ public interface FaultToleranceExampleResourceClient {
   @Bulkhead(3)
   @Produces(MediaType.TEXT_PLAIN)
   public String semaphoreBulkHeadDemo() throws InterruptedException;
+
+  @POST
+  @Path("threadpoolbulkhead")
+  @Bulkhead(value = 3, waitingTaskQueue = 2)
+  @Produces(MediaType.TEXT_PLAIN)
+  public CompletionStage<String> threadPoolBulkheadExample(@QueryParam("invocationNum") int invocationNum) throws InterruptedException;
 }
