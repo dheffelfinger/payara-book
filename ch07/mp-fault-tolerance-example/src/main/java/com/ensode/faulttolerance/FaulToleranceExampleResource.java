@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
@@ -55,6 +56,21 @@ public class FaulToleranceExampleResource {
 
     return retVal;
 
+  }
+
+  @POST
+  @Path("threadpoolbulkhead")
+  @Asynchronous
+  @Bulkhead(value = 3, waitingTaskQueue = 2)
+  @Produces(MediaType.TEXT_PLAIN)
+  public CompletionStage<String> threadPoolBulkheadExample(@QueryParam("invocationNum") int invocationNum) throws InterruptedException {
+    String retVal;
+    retVal = String.format("Invocation number %d succeeded \n",
+            invocationNum);
+
+    TimeUnit.SECONDS.sleep(3);
+
+    return CompletableFuture.completedStage(retVal);
   }
 
 }

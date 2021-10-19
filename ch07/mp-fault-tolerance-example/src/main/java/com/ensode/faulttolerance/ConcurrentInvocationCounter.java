@@ -1,22 +1,37 @@
 package com.ensode.faulttolerance;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ConcurrentInvocationCounter {
 
-  int counter = 0;
+  private AtomicInteger counter = new AtomicInteger(0);
+
+  private AtomicInteger threadPoolInvocationCounter = new AtomicInteger(0);
 
   public void increaseCounter() {
-    counter++;
+    counter.incrementAndGet();
   }
 
   public void decreaseCounter() {
-    counter--;
+    counter.decrementAndGet();
+  }
+
+  public void increaseThreadPoolCounter() {
+    threadPoolInvocationCounter.incrementAndGet();
+  }
+
+  public void decreaseThreadPoolCounter() {
+    threadPoolInvocationCounter.decrementAndGet();
   }
 
   public int getCounter() {
-    return counter;
+    return counter.get();
+  }
+
+  public int getThradPoolInvocationCounter() {
+    return threadPoolInvocationCounter.get();
   }
 
 }
