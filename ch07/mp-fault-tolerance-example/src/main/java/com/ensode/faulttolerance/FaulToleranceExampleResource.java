@@ -1,5 +1,6 @@
 package com.ensode.faulttolerance;
 
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
@@ -74,7 +75,7 @@ public class FaulToleranceExampleResource {
     return CompletableFuture.completedStage(retVal);
   }
 
-  @CircuitBreaker(requestVolumeThreshold = 3)
+  @CircuitBreaker(requestVolumeThreshold = 3, delay = 1, delayUnit = ChronoUnit.SECONDS, failureRatio = .66, successThreshold = 2)
   @POST
   @Produces(MediaType.TEXT_PLAIN)
   @Path("circuitbreaker")

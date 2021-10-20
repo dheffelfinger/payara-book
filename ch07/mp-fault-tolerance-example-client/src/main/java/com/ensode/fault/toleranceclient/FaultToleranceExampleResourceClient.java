@@ -1,5 +1,6 @@
 package com.ensode.fault.toleranceclient;
 
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CompletionStage;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -40,7 +41,7 @@ public interface FaultToleranceExampleResourceClient {
   @Produces(MediaType.TEXT_PLAIN)
   public CompletionStage<String> threadPoolBulkheadExample(@QueryParam("invocationNum") int invocationNum) throws InterruptedException;
 
-  @CircuitBreaker(requestVolumeThreshold = 3)
+  @CircuitBreaker(requestVolumeThreshold = 3, delay = 1, delayUnit = ChronoUnit.SECONDS, failureRatio = .66, successThreshold = 2)
   @POST
   @Produces(MediaType.TEXT_PLAIN)
   @Path("circuitbreaker")

@@ -124,8 +124,8 @@ public class FaultToleranceClientService {
       LOGGER.log(Level.SEVERE, "Circuit breaker is open", e);
     }
 
-    //Wait half a second, circuit is now half open, call succeeds.
-    TimeUnit.MILLISECONDS.sleep(5_000);
+    //Wait one second, circuit is now half open, call succeeds.
+    TimeUnit.SECONDS.sleep(1);
     try {
       LOGGER.log(Level.INFO, client.circuitBreakerExample(true)); //call fails because the circuit is open
     } catch (RuntimeException re) {
