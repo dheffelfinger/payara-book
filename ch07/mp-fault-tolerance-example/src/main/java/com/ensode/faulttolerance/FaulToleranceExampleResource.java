@@ -13,6 +13,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 
 @RequestScoped
 @Path("faulttoleranceexample")
@@ -71,6 +72,18 @@ public class FaulToleranceExampleResource {
     TimeUnit.SECONDS.sleep(3);
 
     return CompletableFuture.completedStage(retVal);
+  }
+
+  @CircuitBreaker(requestVolumeThreshold = 3)
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("circuitbreaker")
+  public String circuitBreakerExample(@QueryParam("success") boolean success) {
+    if (success == false) {
+      throw new RuntimeException("forcing a failure for demo purposes");
+    } else {
+      return "Call succeeded";
+    }
   }
 
 }

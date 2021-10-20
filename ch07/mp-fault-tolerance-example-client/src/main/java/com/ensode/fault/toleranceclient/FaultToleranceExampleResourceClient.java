@@ -9,6 +9,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterRestClient
@@ -38,4 +39,10 @@ public interface FaultToleranceExampleResourceClient {
   @Bulkhead(value = 3, waitingTaskQueue = 2)
   @Produces(MediaType.TEXT_PLAIN)
   public CompletionStage<String> threadPoolBulkheadExample(@QueryParam("invocationNum") int invocationNum) throws InterruptedException;
+
+  @CircuitBreaker(requestVolumeThreshold = 3)
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("circuitbreaker")
+  public String circuitBreakerExample(@QueryParam("success") boolean success);
 }

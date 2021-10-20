@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.eclipse.microprofile.faulttolerance.exceptions.CircuitBreakerOpenException;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("/faulttoleranceclient")
@@ -91,6 +93,46 @@ public class FaultToleranceClientService {
         LOGGER.log(Level.SEVERE, String.format("%s caught", ex.getClass().getName()), ex);
       }
     });
+  }
+
+  @POST
+  @Path("circuitbreaker")
+  public void circuitBreakerClient() throws InterruptedException {
+
+    try {
+      LOGGER.log(Level.INFO, client.circuitBreakerExample(true));
+    } catch (RuntimeException re) {
+      LOGGER.log(Level.SEVERE, re.getMessage());
+    }
+
+    try {
+      LOGGER.log(Level.INFO, client.circuitBreakerExample(false));
+    } catch (RuntimeException re) {
+      LOGGER.log(Level.SEVERE, re.getMessage());
+    }
+
+    try {
+      LOGGER.log(Level.INFO, client.circuitBreakerExample(false));
+    } catch (RuntimeException re) {
+      LOGGER.log(Level.SEVERE, re.getMessage());
+    }
+
+    //circuit opens
+    try {
+      LOGGER.log(Level.INFO, client.circuitBreakerExample(true)); //call fails because the circuit is open
+    } catch (CircuitBreakerOpenException e) {
+      LOGGER.log(Level.SEVERE, "Circuit breaker is open", e);
+    }
+
+    //Wait half a second, circuit is now half open, call succeeds.
+    TimeUnit.MILLISECONDS.sleep(5_000);
+    try {
+      LOGGER.log(Level.INFO, client.circuitBreakerExample(true)); //call fails because the circuit is open
+    } catch (RuntimeException re) {
+      LOGGER.log(Level.SEVERE, re.getMessage());
+    }
+    //circuit breaker is now closed
+
   }
 
 }
