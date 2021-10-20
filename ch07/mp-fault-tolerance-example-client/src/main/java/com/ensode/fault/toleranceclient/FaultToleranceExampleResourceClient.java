@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterRestClient
@@ -46,4 +47,10 @@ public interface FaultToleranceExampleResourceClient {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("circuitbreaker")
   public String circuitBreakerExample(@QueryParam("success") boolean success);
+
+  @Fallback(fallbackMethod = "fallbackMethod")
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("fallback")
+  public String fallbackExample(@QueryParam("success") boolean success);
 }

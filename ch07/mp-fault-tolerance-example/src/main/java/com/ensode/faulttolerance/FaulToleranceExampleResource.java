@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 
 @RequestScoped
 @Path("faulttoleranceexample")
@@ -80,6 +81,34 @@ public class FaulToleranceExampleResource {
   @Produces(MediaType.TEXT_PLAIN)
   @Path("circuitbreaker")
   public String circuitBreakerExample(@QueryParam("success") boolean success) {
+    if (success == false) {
+      throw new RuntimeException("forcing a failure for demo purposes");
+    } else {
+      return "Call succeeded";
+    }
+  }
+
+  @Fallback(fallbackMethod = "fallbackMethod")
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("fallback")
+  public String fallbackMethodExample(@QueryParam("success") boolean success) {
+    if (success == false) {
+      throw new RuntimeException("forcing a failure for demo purposes");
+    } else {
+      return "Call succeeded";
+    }
+  }
+
+  private String fallbackMethod(boolean success) {
+    return "Something went wrong";
+  }
+
+  @Fallback(ExampleFallbackHandler.class)
+  @POST
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("fallbackhandler")
+  public String fallbackHandlerExample(@QueryParam("success") boolean success) {
     if (success == false) {
       throw new RuntimeException("forcing a failure for demo purposes");
     } else {
