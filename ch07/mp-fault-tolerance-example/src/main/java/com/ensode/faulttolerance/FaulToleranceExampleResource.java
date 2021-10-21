@@ -4,6 +4,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Produces;
@@ -16,13 +18,19 @@ import org.eclipse.microprofile.faulttolerance.Asynchronous;
 import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
 
 @RequestScoped
 @Path("faulttoleranceexample")
 public class FaulToleranceExampleResource {
 
+  private static final Logger LOGGER = Logger.getLogger(FaulToleranceExampleResource.class.getName());
+
   @Inject
   private ConcurrentInvocationCounter concurrentInvocationCounter;
+
+  @Inject
+  private EndpointSuccessDeterminator endpointSuccessDeterminator;
 
   @Asynchronous
   @GET
@@ -113,6 +121,25 @@ public class FaulToleranceExampleResource {
       throw new RuntimeException("forcing a failure for demo purposes");
     } else {
       return "Call succeeded";
+    }
+  }
+
+  @Retry
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("retry")
+  public String retryExample() {
+    LOGGER.log(Level.INFO, "retryExample() invoked");
+    boolean success;
+
+    success = endpointSuccessDeterminator.allowEndpointToSucceed();
+
+    if (!success) {
+      LOGGER.log(Level.SEVERE, "retryExample() invocation failed");
+      throw new RuntimeException("forcing a failure for demo purposes");
+    } else {
+      LOGGER.log(Level.INFO, "retryExample() invocation succeeded");
+      return "Call succeeded\n";
     }
   }
 
