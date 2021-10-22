@@ -19,6 +19,7 @@ import org.eclipse.microprofile.faulttolerance.Bulkhead;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 @RequestScoped
 @Path("faulttoleranceexample")
@@ -141,6 +142,21 @@ public class FaulToleranceExampleResource {
       LOGGER.log(Level.INFO, "retryExample() invocation succeeded");
       return "Call succeeded\n";
     }
+  }
+
+  @Timeout(value = 3, unit = ChronoUnit.SECONDS)
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  @Path("timeout")
+  public String timeoutExample(@QueryParam("delay") long delay) {
+
+    try {
+      TimeUnit.SECONDS.sleep(delay);
+    } catch (InterruptedException ex) {
+      LOGGER.log(Level.INFO, "sleep() interrupted");
+    }
+
+    return "Call returned successfully\n";
   }
 
 }
