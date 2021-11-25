@@ -1,4 +1,4 @@
-package com.ensode.openapiexample;
+package com.ensode.openapiexample.client;
 
 import java.util.Objects;
 
@@ -17,14 +17,6 @@ public class Employee {
   private String firstName;
   private String lastName;
 
-  public Integer getEmployeeId() {
-    return employeeId;
-  }
-
-  public void setEmployeeId(Integer employeeId) {
-    this.employeeId = employeeId;
-  }
-
   public String getFirstName() {
     return firstName;
   }
@@ -41,12 +33,20 @@ public class Employee {
     this.lastName = lastName;
   }
 
+  public Integer getEmployeeId() {
+    return employeeId;
+  }
+
+  public void setEmployeeId(Integer employeeId) {
+    this.employeeId = employeeId;
+  }
+
   @Override
   public int hashCode() {
-    int hash = 3;
-    hash = 13 * hash + Objects.hashCode(this.employeeId);
-    hash = 13 * hash + Objects.hashCode(this.firstName);
-    hash = 13 * hash + Objects.hashCode(this.lastName);
+    int hash = 5;
+    hash = 47 * hash + Objects.hashCode(this.employeeId);
+    hash = 47 * hash + Objects.hashCode(this.firstName);
+    hash = 47 * hash + Objects.hashCode(this.lastName);
     return hash;
   }
 
