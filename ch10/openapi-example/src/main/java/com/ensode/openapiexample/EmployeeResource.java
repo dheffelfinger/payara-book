@@ -13,7 +13,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @ApplicationScoped
@@ -29,12 +32,13 @@ public class EmployeeResource {
   }
 
   @GET
+  @Operation(operationId = "Find Employee", summary = "Finds an employee", description = "Finds an employee from the given employee ID, returns an HTTP code 404 if the employee is not found")
   @APIResponse(responseCode = "200",
           description = "Employee found",
-          content = @Content(mediaType = APPLICATION_JSON))
+          content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = Employee.class)))
   @APIResponse(responseCode = "404",
           description = "Employee not found ")
-  public Employee findEmployee(@QueryParam("employeeId") Integer employeeID) {
+  public Employee findEmployee(@QueryParam("employeeID") @Parameter(description = "Employee ID", required = true) Integer employeeID) {
     Optional<Employee> employeeToFind = employeeList.stream().filter(emp -> emp.getEmployeeId().equals(employeeID)
     ).findFirst();
 
