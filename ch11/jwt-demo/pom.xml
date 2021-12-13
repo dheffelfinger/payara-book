@@ -31,14 +31,14 @@
     
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.microprofile.jwt</groupId>
-      <artifactId>microprofile-jwt-auth-api</artifactId>
-      <type>jar</type>
+      <groupId>org.eclipse.microprofile</groupId>
+      <artifactId>microprofile</artifactId>
+      <scope>provided</scope>
+      <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>${version.javaee}</version>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-web-api</artifactId>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -79,6 +79,9 @@
           <commandLineOptions>
             <option>
               <key>--autoBindHttp</key>
+            </option>
+            <option>
+              <key>--nocluster</key>
             </option>
             <option>
               <key>--deploy</key>

@@ -12,7 +12,6 @@ import org.eclipse.microprofile.auth.LoginConfig;
 //Application class needs to be made a singleton for @LoginConfig to work
 @Singleton
 @ApplicationPath("webresources")
-//pom.xml dependencies need to be modified to gain access to this annotation
 @LoginConfig(authMethod = "MP-JWT")
 public class ApplicationConfig extends Application {
 
