@@ -10,7 +10,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @RegisterRestClient
 @Path("jwtdemo")
-public interface JwtDemoResourceClient extends AutoCloseable{
+public interface JwtDemoResourceClient {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
