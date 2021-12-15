@@ -1,5 +1,6 @@
 package com.ensode.jwtdemo;
 
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
@@ -35,10 +36,12 @@ public class JwtDemoResource {
     LOGGER.log(Level.INFO, String.format("Subject: %s", jsonWebToken.getSubject()));
     LOGGER.log(Level.INFO, String.format("Token ID: %s", jsonWebToken.getTokenID()));
 
+    Set<String> claimNames = jsonWebToken.getClaimNames();
+    
     LOGGER.log(Level.INFO, "--- Begin Token Claims");
-    jsonWebToken.getClaimNames().forEach(c
-            -> LOGGER.log(Level.INFO,
-                    String.format("%s: %s", c, jsonWebToken.claim(c).orElse(""))));
+    claimNames.forEach(claimName -> LOGGER.log(Level.INFO,
+            String.format("%s: %s", claimName,
+                    jsonWebToken.claim(claimName).orElse(""))));
     LOGGER.log(Level.INFO, "--- End Token Claims");
 
     return "Secured endpoint accessed successfully\n";
