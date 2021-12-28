@@ -1,4 +1,4 @@
-package com.ensode.clusteringdemo1;
+package com.ensode.clusteredcdiappscopedbeans;
 
 import javax.inject.Inject;
 import javax.ws.rs.Produces;
